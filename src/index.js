@@ -1,12 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import TodoApp from './components/TodoApp';
+import { createStore } from 'redux';
+import rootReducer from './reducers/rootReducer';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(rootReducer);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// The Application starts from here.
+// Provider passes the store to children components.
+
+const Root = ()=>{
+        return (
+            <Provider store={store}>
+                <TodoApp />
+            </Provider>
+        )
+    }
+
+ReactDOM.render(<Root />, document.getElementById('root'));
+
+// Following the conventional folder structure
+
+// components folder --------> Only presentational components,
+//                               means components used only for displaying data and manipulating
+
+// containers folder --------> Only for passing the state and dispatch functions as props to respective 
+//                              components file.
+//                              passes the state and dispatch as props to presentational components
+
+// reducers folder ----------> Contains only reducers
+
+// actions folder --------------> Contains actions for the dispatch functions. Helps in writing cleaner code.
