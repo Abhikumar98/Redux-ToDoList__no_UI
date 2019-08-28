@@ -1,4 +1,4 @@
-let id = 1;
+let id = Date.now();
 export const addTodo = (text) => ({
         type: 'ADD_TODO',
         text,
