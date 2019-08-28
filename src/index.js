@@ -1,29 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import TodoApp from './components/TodoApp';
-import { createStore } from 'redux';
-import rootReducer from './reducers/rootReducer';
-import { saveTolocalstorage, loadState } from './localstorage';
+import configureStore from './configureStore';
+import Root from './components/Root';
 
-const initialState = loadState();
+// all the operations are taking place in configure store 
+// and it returns a store object
 
-const store = createStore(rootReducer,initialState);
-
-store.subscribe(() => saveTolocalstorage({ todos: store.getState().todos}))
+const store = configureStore();
 
 // The Application starts from here.
 // Provider passes the store to children components.
 
-const Root = ()=>{
-        return (
-            <Provider store={store}>
-                <TodoApp />
-            </Provider>
-        )
-    }
-
-ReactDOM.render(<Root />, document.getElementById('root'));
+ReactDOM.render(<Root store={store} />, document.getElementById('root'));
 
 // Following the conventional folder structure
 
