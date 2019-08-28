@@ -4,8 +4,13 @@ import { Provider } from 'react-redux';
 import TodoApp from './components/TodoApp';
 import { createStore } from 'redux';
 import rootReducer from './reducers/rootReducer';
+import { saveTolocalstorage, loadState } from './localstorage';
 
-const store = createStore(rootReducer);
+const initialState = loadState();
+
+const store = createStore(rootReducer,initialState);
+
+store.subscribe(() => saveTolocalstorage({ todos: store.getState().todos}))
 
 // The Application starts from here.
 // Provider passes the store to children components.
