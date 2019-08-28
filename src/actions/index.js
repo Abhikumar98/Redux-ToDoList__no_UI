@@ -1,8 +1,7 @@
-let id = Date.now();
 export const addTodo = (text) => ({
         type: 'ADD_TODO',
         text,
-        id: id++
+        id: Date.now()
     })
 
 export const toggleTodo = (id) => ({
