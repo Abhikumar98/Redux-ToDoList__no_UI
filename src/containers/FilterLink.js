@@ -1,22 +1,12 @@
-import { connect } from 'react-redux';
-import { VisibilityFilter } from '../actions/index'
-import Link from '../components/Link'
+import { Link } from 'react-router-dom';
+import React from 'react'
 
-const mapStateToProps = (state, ownProps) => (
-    {
-        // for checking if the link is selected. Used for disabling the <a /> tag
-        active: state.visibilityFilter === ownProps.filter
-    }
-);
-
-const mapDispatchToProps = (dispatch, ownProps) => (
-    {
-        // uses VisibilityFilter action creator and passes a filter value.
-        onClick : ()=> dispatch(VisibilityFilter(ownProps.filter))
-    }
+const FilterLink = ({filter, children}) => (
+    <Link to={ filter === 'all' ? '/': filter } 
+          activeStyle={{ textDecoration: 'none', color : 'grey' }} 
+          >
+        {children}
+    </Link>
 )
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Link);
+export default FilterLink

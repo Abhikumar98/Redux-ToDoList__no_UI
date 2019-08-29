@@ -1,23 +1,25 @@
 import { connect } from 'react-redux';
 import ListItem from '../components/ListItem';
 import { toggleTodo } from '../actions';
-
-const visibleTodos = (todos, filter)=>{
-    switch(filter){
-        case 'SHOW_ALL':
+import { withRouter } from 'react-router-dom';
+const visibleTodos = (todos, params)=>{
+    console.log("ownProps ==========> ",params.filter);
+    
+    switch(params.filter){
+        case 'all':
             return todos; //return all todos
-        case 'SHOW_ACTIVE':
+        case 'active':
             return todos.filter(todo=> !todo.completed) //return all todos with completed : false
-        case 'SHOW_COMPLETED':
+        case 'completed':
             return todos.filter(todo => todo.completed) //return all todos with completed : true
         default:
             return todos;
     }
 }
 
-// getting the visible items based on the visibility filter selected.
-// state.visibilityFilter gives a value based on link selected.
-const mapStateToProps = state =>({todo : visibleTodos(state.todos, state.visibilityFilter)})
+const mapStateToProps = (state, ownProps) =>({
+    todo : visibleTodos(state.todos, ownProps.match.params)
+})
 
 // calls actionCreator and pass id, which return an object to be dispatched
 const mapDispatchToProps = dispatch => ({ toggle: id => {
@@ -28,7 +30,7 @@ const mapDispatchToProps = dispatch => ({ toggle: id => {
 // these props are objects and have to be used by the name given as property
 // eg. 'mapDispatchToProps' passes a prop of "toggle" which uses dispatch later
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-    )(ListItem);
+    )(ListItem));

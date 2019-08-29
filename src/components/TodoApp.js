@@ -6,6 +6,7 @@ import TodoList from '../containers/TodoList';
 // Parent component, contains all the containers / presentational components to be shown. 
 
 class TodoApp extends Component {
+    
     render() {
         return (
             <div>
